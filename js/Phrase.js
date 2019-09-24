@@ -16,21 +16,18 @@ class Phrase {
 
         }
         html += "</ul>"
-        console.log(html)
+
         document.getElementById('phrase').innerHTML = html
     }
 
     checkLetter(letter) {
-        let letterSplit = this.phrase.split("");
-        let matchLetters = []
-        for (let letra of letterSplit) {
-            if (letra === letter) matchLetters.push(letra)
-        }
-        return matchLetters
+        return this.phrase.includes(letter) ? true : false;
     }
 
-    showMatchedLetter() {
-
+    showMatchedLetter(letter) {
+        document.querySelectorAll('.letter').forEach(lett => {
+            if (lett.textContent === letter) lett.classList.replace("hide", "show")
+        })
     }
 
 }

@@ -33,19 +33,21 @@ class Game {
 
     handleInteraction(letter) {
 
-        if (this.activePhrase.checkLetter(letter) == "") {
+        if (this.activePhrase.checkLetter(letter) === false) {
             document.querySelectorAll('button').forEach(key => {
                 if (key.textContent === letter) key.classList.add("wrong")
             })
         } else {
             document.querySelectorAll('button').forEach(key => {
-                if (key.textContent === letter) key.classList.add("chosen")
+                if (key.textContent === letter) {
+                    key.classList.add("chosen")
+                    this.activePhrase.showMatchedLetter(letter)
+                    //this.checkForWin()
+                    //this.gameOver()
+                }
+
             })
-
-
         }
-
-
     }
 
     removeLife() {
