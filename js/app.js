@@ -7,5 +7,5 @@ document.querySelector('#btn__reset').addEventListener("click", () => game.start
 
 document.querySelector('#qwerty').addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON") game.handleInteraction(e.target.textContent)
-    console.log(e.target.textContent)
+
 })

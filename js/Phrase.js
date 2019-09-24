@@ -20,9 +20,13 @@ class Phrase {
         document.getElementById('phrase').innerHTML = html
     }
 
-    checkLetter() {
-
-
+    checkLetter(letter) {
+        let letterSplit = this.phrase.split("");
+        let matchLetters = []
+        for (let letra of letterSplit) {
+            if (letra === letter) matchLetters.push(letra)
+        }
+        return matchLetters
     }
 
     showMatchedLetter() {

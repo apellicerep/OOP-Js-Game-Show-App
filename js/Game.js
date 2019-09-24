@@ -33,7 +33,18 @@ class Game {
 
     handleInteraction(letter) {
 
-        console.log("handle Interaction")
+        if (this.activePhrase.checkLetter(letter) == "") {
+            document.querySelectorAll('button').forEach(key => {
+                if (key.textContent === letter) key.classList.add("wrong")
+            })
+        } else {
+            document.querySelectorAll('button').forEach(key => {
+                if (key.textContent === letter) key.classList.add("chosen")
+            })
+
+
+        }
+
 
     }
 
