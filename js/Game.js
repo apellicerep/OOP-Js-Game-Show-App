@@ -88,7 +88,12 @@ class Game {
         setTimeout(() => {
             document.querySelector('#overlay').style.display = ""
             document.querySelector('#game-over-message').textContent = "YOU WIN"
-            document.querySelector('#overlay').classList.add("win")
+            if (document.querySelector('#overlay').classList.contains("lose")) {
+                document.querySelector('#overlay').classList.replace("lose", "win")
+            }
+            else {
+                document.querySelector('#overlay').classList.add("win")
+            }
         }, 1000)
     }
 
@@ -117,7 +122,13 @@ class Game {
         setTimeout(() => {
             document.querySelector('#overlay').style.display = ""
             document.querySelector('#game-over-message').textContent = "GAME OVER"
-            document.querySelector('#overlay').classList.add("lose")
+            if (document.querySelector('#overlay').classList.contains("win")) {
+                document.querySelector('#overlay').classList.replace("win", "lose")
+            }
+            else {
+                document.querySelector('#overlay').classList.add("lose")
+            }
+            //document.querySelector('#overlay').classList.add("lose")
         }, 2300)
 
     }
