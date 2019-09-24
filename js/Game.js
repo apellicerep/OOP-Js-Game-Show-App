@@ -35,13 +35,18 @@ class Game {
 
         if (this.activePhrase.checkLetter(letter) === false) {
             document.querySelectorAll('button').forEach(key => {
-                if (key.textContent === letter) key.classList.add("wrong")
+                if (key.textContent === letter) {
+                    key.classList.add("wrong")
+                    this.removeLife()
+                }
+
             })
         } else {
             document.querySelectorAll('button').forEach(key => {
                 if (key.textContent === letter) {
                     key.classList.add("chosen")
                     this.activePhrase.showMatchedLetter(letter)
+                    //this.removeLife()
                     //this.checkForWin()
                     //this.gameOver()
                 }
@@ -52,6 +57,18 @@ class Game {
 
     removeLife() {
 
+        if (this.missed === 4) this.gameOver();
+
+        let srcNodeList = document.querySelectorAll('.tries img')
+        let src = Array.from(srcNodeList) //nodelist to array because i want to use includes.
+
+        for (let i = 0; i < src.length; i++) {
+            if (src[i].src.includes('live')) {
+                src[i].src = `images/lostHeart.png`
+                break;
+            }
+        }
+        this.missed++
     }
 
     ceckForWin() {
@@ -60,6 +77,7 @@ class Game {
     }
 
     gameOver() {
+        console.log("game over")
 
     }
 
