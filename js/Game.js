@@ -5,8 +5,11 @@ class Game {
         this.activePhrase = null
     }
 
+    /**
+     * Creates an Array of Phrase objects.
+     * @return {Array} Phrase Objects.
+     */
     createPhrases() {
-
         let arrayObjectPhrases = []
         for (let i = 0; i < 5; i++) {
             //console.log(i)
@@ -16,6 +19,11 @@ class Game {
 
     }
 
+    /**
+     * Cleans qwerty bord and lifes, hides start screen and calls getRandomPhrase to set
+     * the activePhrase object, then call the methodPhraseToDisplay() from the activePhrase object
+     * to add that phrase to the board. 
+     */
     startGame() {
 
         //clean before start
@@ -24,21 +32,29 @@ class Game {
         document.querySelectorAll('.tries img').forEach(img => img.src = "images/liveHeart.png")
 
 
+
         document.querySelector('#overlay').style.display = "none"
         this.activePhrase = this.getRandomPhrase() //adding random object Phrase in activePhrase.
         this.activePhrase.addPhraseToDisplay()
-        console.log(this.activePhrase)
-
-
 
     }
 
+    /**
+     * Retrieves one of the phrases object from the array.
+     * @return {Object} 
+     */
     getRandomPhrase() {
         //console.log(this.phrases[Math.floor(Math.random() * 4)])
         return this.phrases[Math.floor(Math.random() * 4)]
 
     }
 
+    /**
+     * Checks if the letter is in the phrase board, if it's not, it add class wrong to the qwerty board,
+     * and it remove a life, if it is, it add class chosen to the qwerty board and it show the matched letter
+     * on the board and it check if we won.
+     * @param {String} letter - passed from the the qwerty board and keypad event.
+     */
     handleInteraction(letter) {
 
         if (this.activePhrase.checkLetter(letter) === false) {
@@ -55,13 +71,19 @@ class Game {
                     key.classList.add("chosen")
                     this.activePhrase.showMatchedLetter(letter)
                     this.checkForWin()
-                    //this.gameOver()
+
                 }
 
             })
         }
     }
 
+
+    /**
+     * selects the the first img with src=`images/winHeart.png` and change it for src=`images/lostHeart.png` then
+     * check if it have hit the missed points,if so it call gameOver, if that is not the case, missed is increased.
+     * it add heart animation when its left one heart.
+     */
     removeLife() {
 
         let srcNodeList = document.querySelectorAll('.tries img')
@@ -74,11 +96,16 @@ class Game {
             }
         }
 
-        if (this.missed === 4) this.gameOver();
+        if (this.missed === 4) this.gameOver(); src[4].classList.remove("heartAni");
         this.missed++
+        if (this.missed === 4) src[4].classList.add("heartAni")
 
 
     }
+    /**
+     * check from the letters board if there are letters with the class hide left,if not the case
+     * it show the starts screen and it add a winer message and class after 1 second.
+     */
 
     checkForWin() {
         let letras = document.querySelectorAll('.letter')
@@ -94,9 +121,14 @@ class Game {
             else {
                 document.querySelector('#overlay').classList.add("win")
             }
+            document.getElementById('phrase').innerHTML = "" //cleaning list
         }, 1000)
     }
 
+    /**
+     * it Add animation where it shows the letters of the board consecutively every 75ms
+     * and after 2,3 seconds it show the starts screen and it add a lose message and class.
+     */
     gameOver() {
 
         function callInterval() {
@@ -115,10 +147,6 @@ class Game {
 
         }
 
-        callInterval();
-
-
-
         setTimeout(() => {
             document.querySelector('#overlay').style.display = ""
             document.querySelector('#game-over-message').textContent = "GAME OVER"
@@ -128,8 +156,9 @@ class Game {
             else {
                 document.querySelector('#overlay').classList.add("lose")
             }
-            //document.querySelector('#overlay').classList.add("lose")
+            document.getElementById('phrase').innerHTML = " " //cleaning list
         }, 2300)
 
+        callInterval()
     }
 }
