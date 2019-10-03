@@ -132,33 +132,42 @@ class Game {
     gameOver() {
 
         function callInterval() {
-            let test = document.querySelectorAll('.letter')
-            let i = 0;
-            let interval = setInterval(function () {
-                if (i < test.length) {
-                    test[i].classList.replace("hide", "show")
-                    i++;
-                } else {
-                    console.log("stop")
-                    clearInterval(interval)
-                }
+            return new Promise((resolve) => {
+                let test = document.querySelectorAll('.letter')
+                let i = 0;
+                let interval = setInterval(function () {
+                    if (i < test.length) {
+                        test[i].classList.replace("hide", "show")
+                        i++;
+                    } else {
+                        console.log("stop")
+                        resolve();
+                        clearInterval(interval)
+                    }
 
-            }, 75)
+                }, 150)
 
+            })
         }
 
-        setTimeout(() => {
-            document.querySelector('#overlay').style.display = ""
-            document.querySelector('#game-over-message').textContent = "GAME OVER"
-            if (document.querySelector('#overlay').classList.contains("win")) {
-                document.querySelector('#overlay').classList.replace("win", "lose")
-            }
-            else {
-                document.querySelector('#overlay').classList.add("lose")
-            }
-            document.getElementById('phrase').innerHTML = " " //cleaning list
-        }, 2300)
+        function delay() {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    document.querySelector('#overlay').style.display = ""
+                    document.querySelector('#game-over-message').textContent = "GAME OVER"
+                    if (document.querySelector('#overlay').classList.contains("win")) {
+                        document.querySelector('#overlay').classList.replace("win", "lose")
+                    }
+                    else {
+                        document.querySelector('#overlay').classList.add("lose")
+                    }
+                    document.getElementById('phrase').innerHTML = " " //cleaning list
+                    resolve();
+                }, 1000)
 
-        callInterval()
+            })
+        }
+
+        callInterval().then(delay)
     }
 }
